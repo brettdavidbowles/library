@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    
+<body>
+        <div class = "bookCards" id = 'bookCards'>
+        
+        </div>
+
+<style>
+.bookCards {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  width: 300px
+}
+</style>
+    <script>
+        
+        let myLibrary = [];
+
+function Books(title, author, pages, read) {
+        this.title = title
+        this.author = author
+        this.pages = pages
+        this.read = read
+        this.info = function() {
+          return `${title} by ${author}, ${pages} pages, ${read}`
+            }
+
+        }
+
+function addBookToLibrary(book) {
+  //add object to library array
+    myLibrary.push(book)
+  
+};
+
+const theHobbit = new Books ("The Hobbit", "J.R.R. Tolkien",  295, true)
+
+addBookToLibrary(theHobbit);
+
+
+const frannyAndZooey = new Books ("Franny and Zooey", "J.D. Salinger", 201, true)
+
+addBookToLibrary(frannyAndZooey)
+
+const doorsOfPerception = new Books ("The Doors of Perception", "Aldous Huxley", 63, true)
+
+addBookToLibrary(doorsOfPerception)
+
+const eastOfEden = new Books ("East of Eden", "John Steinbeck", 601, false)
+
+addBookToLibrary(eastOfEden)
+
+const bookCards = document.querySelector('#bookCards');
+
+function render (arr) {
+      //creates cards for each new book
+  
+  arr.forEach (element => {
+
+   let newBook = document.createElement('h1');
+  newBook.id = "newBook";
+    newBook.style.border = '3px solid'
+    newBook.style.borderWidth = '6 px'
+    
+  
+    let titleNode = document.createTextNode(
+    element.title
+    )
+    newBook.appendChild(titleNode)
+    
+    let author = document.createElement('p');
+    author.style.fontSize = '16px'
+    let authorNode = document.createTextNode(
+    element.author)
+    author.appendChild(authorNode)
+    
+    let pages = document.createElement('p');
+    pages.style.fontSize = '16px'
+    let pageNode = document.createTextNode(
+    element.pages + ' pages')
+    pages.appendChild(pageNode)
+    
+    let read = document.createElement('p');
+    read.style.fontSize = '16px'
+    
+    function haveIRead (element) {
+      
+      if (element.read) {
+        return "I have read this."
+      } else {
+        return "I have not read this."
+      }
+    }
+    
+   
+    
+    let readNode = document.createTextNode(
+    haveIRead(element))
+    read.appendChild(readNode)
+    
+    bookCards.appendChild(newBook)
+    newBook.appendChild(author)
+    newBook.appendChild(pages)
+    newBook.appendChild(read)
+    
+  })
+}
+
+render(myLibrary)
+
+
+
+
+
+
+
+    </script>
+</body>
+</html>
