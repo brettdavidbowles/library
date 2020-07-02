@@ -2,6 +2,30 @@
 <html>
     
 <body>
+
+  <button id = "newBook"  type = "button">New Book</button>
+  <div id = 'forms'>
+    <form>
+      Title: <input type = 'text' id = 'title'>
+    
+    
+   
+      Author: <input type = 'text' id = 'author'>
+    
+      How many pages?: <input type = 'text' id = 'pages'>
+     
+
+      Have you read it?: <input type = 'radio' id = 'yes' name = 'yesOrNo' value = 'true'>Yes
+                          <input type = 'radio' id = 'no' name = 'yesOrNo' value = 'false'>
+                          <label for = 'no'>No</label>
+
+      <input type = 'button' value = 'Log New Book' onclick = 'logBook()' />
+
+    </form>
+
+    </div>
+
+    
         <div class = "bookCards" id = 'bookCards'>
         
         </div>
@@ -29,31 +53,26 @@ function Books(title, author, pages, read) {
 
         }
 
-function addBookToLibrary(book) {
-  //add object to library array
-    myLibrary.push(book)
+let numberOfBooks = 1;
+
+function logBook() {
+ 
+
+  let newBook = new Books (document.getElementById('title').value, 
+                            document.getElementById('author').value, 
+                            document.getElementById('pages').value, 
+                            document.getElementsByName('yesOrNo').value)
   
-};
+  addBookToLibrary(newBook);
+ console.log(myLibrary)
+  
+  render(myLibrary)
+  
+}
 
-const theHobbit = new Books ("The Hobbit", "J.R.R. Tolkien",  295, true)
+function clearForm() {
 
-addBookToLibrary(theHobbit);
-
-
-const frannyAndZooey = new Books ("Franny and Zooey", "J.D. Salinger", 201, true)
-
-addBookToLibrary(frannyAndZooey)
-
-const doorsOfPerception = new Books ("The Doors of Perception", "Aldous Huxley", 63, true)
-
-addBookToLibrary(doorsOfPerception)
-
-const eastOfEden = new Books ("East of Eden", "John Steinbeck", 601, false)
-
-addBookToLibrary(eastOfEden)
-
-const bookCards = document.querySelector('#bookCards');
-
+}
 function render (arr) {
       //creates cards for each new book
   
@@ -108,7 +127,41 @@ function render (arr) {
   })
 }
 
-render(myLibrary)
+
+
+
+function addBookToLibrary(book) {
+  //add object to library array
+    myLibrary.push(book);
+    
+};
+
+
+const theHobbit = new Books ("The Hobbit", "J.R.R. Tolkien",  295, true)
+
+addBookToLibrary(theHobbit);
+
+
+const frannyAndZooey = new Books ("Franny and Zooey", "J.D. Salinger", 201, true)
+
+addBookToLibrary(frannyAndZooey)
+
+const doorsOfPerception = new Books ("The Doors of Perception", "Aldous Huxley", 63, true)
+
+addBookToLibrary(doorsOfPerception)
+
+const eastOfEden = new Books ("East of Eden", "John Steinbeck", 601, false)
+
+addBookToLibrary(eastOfEden)
+
+const bookCards = document.querySelector('#bookCards');
+
+
+
+
+
+
+
 
 
 
