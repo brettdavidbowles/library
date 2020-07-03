@@ -3,24 +3,24 @@
     
 <body>
 
-  <button id = "newBook"  type = "button">New Book</button>
+  <button id = "newBook"  type = "button" onclick = 'showForm()'>New Book</button>
   <div id = 'forms'>
-    <form>
-      Title: <input type = 'text' id = 'title'>
+    <form id = 'books'>
+      Title: <input type = 'text' id = 'title' name = 'book'>
     
     
    
-      Author: <input type = 'text' id = 'author'>
+      Author: <input type = 'text' id = 'author' name = 'book'>
     
-      How many pages?: <input type = 'text' id = 'pages'>
+      How many pages?: <input type = 'text' id = 'pages' name = 'book'>
      
 
       Have you read it?: <input type = 'radio' id = 'yes' name = 'yesOrNo' value = 'true'>Yes
                           <input type = 'radio' id = 'no' name = 'yesOrNo' value = 'false'>
                           <label for = 'no'>No</label>
 
-      <input type = 'button' value = 'Log New Book' onclick = 'logBook()' />
-
+      <input type = 'button' value = 'Log New Book' onclick = 'logBook()'>
+      
     </form>
 
     </div>
@@ -37,11 +37,17 @@
   flex-wrap: nowrap;
   width: 300px
 }
+
+#forms {
+  display: none;
+}
 </style>
     <script>
-        
-        let myLibrary = [];
+const bookCards = document.querySelector('#bookCards');
+let myLibrary = [];
 
+
+//book prototype
 function Books(title, author, pages, read) {
         this.title = title
         this.author = author
@@ -53,33 +59,49 @@ function Books(title, author, pages, read) {
 
         }
 
-let numberOfBooks = 1;
 
+//diplays new book on page
 function logBook() {
- 
+  let readValue
+ if (document.getElementById('yes').checked) {
+   readValue = true
+ } else {
+   readValue = false
+ }
 
-  let newBook = new Books (document.getElementById('title').value, 
+  let newBook = 
+  
+  new Books (document.getElementById('title').value, 
                             document.getElementById('author').value, 
                             document.getElementById('pages').value, 
-                            document.getElementsByName('yesOrNo').value)
+                            readValue)
   
+  
+  while(bookCards.lastChild) {
+  bookCards.removeChild(bookCards.lastChild)
+  }
+
   addBookToLibrary(newBook);
- console.log(myLibrary)
+
   
-  render(myLibrary)
-  
+  render(myLibrary);
+  clearForm();
+  document.getElementById('forms').style.display = 'none';
 }
 
+//reset all form elements
 function clearForm() {
-
+  document.getElementById('books').reset();
 }
+
+
 function render (arr) {
       //creates cards for each new book
-  
+  bookNumber = 0
   arr.forEach (element => {
 
    let newBook = document.createElement('h1');
-  newBook.id = "newBook";
+    element.id = bookNumber + 1;
     newBook.style.border = '3px solid'
     newBook.style.borderWidth = '6 px'
     
@@ -112,7 +134,22 @@ function render (arr) {
         return "I have not read this."
       }
     }
-    
+//button to remove book
+    let removeBook = document.createElement('button')
+    let buttonName = document.createTextNode('Remove Book');
+    removeBook.appendChild(buttonName)
+    removeBook.id = 'button'
+    removeBook.onclick = function() {
+      
+
+      myLibrary.splice(element.id - 1, 1),
+      console.log(element.id)
+      while(bookCards.lastChild) {
+           bookCards.removeChild(bookCards.lastChild)
+        }
+      render(myLibrary)
+      
+      }
    
     
     let readNode = document.createTextNode(
@@ -123,7 +160,9 @@ function render (arr) {
     newBook.appendChild(author)
     newBook.appendChild(pages)
     newBook.appendChild(read)
+    newBook.appendChild(removeBook)
     
+    bookNumber++
   })
 }
 
@@ -136,36 +175,20 @@ function addBookToLibrary(book) {
     
 };
 
+//make forms appear with new book button
 
-const theHobbit = new Books ("The Hobbit", "J.R.R. Tolkien",  295, true)
+  function showForm() {
+    let x = document.getElementById('forms') 
+    if (x.style.display === "block") {
+      x.style.display = 'none';
+    } else {
+      x.style.display = 'block';
+    }
+  }
 
-addBookToLibrary(theHobbit);
+//button to remove each book from library
 
-
-const frannyAndZooey = new Books ("Franny and Zooey", "J.D. Salinger", 201, true)
-
-addBookToLibrary(frannyAndZooey)
-
-const doorsOfPerception = new Books ("The Doors of Perception", "Aldous Huxley", 63, true)
-
-addBookToLibrary(doorsOfPerception)
-
-const eastOfEden = new Books ("East of Eden", "John Steinbeck", 601, false)
-
-addBookToLibrary(eastOfEden)
-
-const bookCards = document.querySelector('#bookCards');
-
-
-
-
-
-
-
-
-
-
-
+//button to change read status
 
 
 
