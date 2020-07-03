@@ -134,6 +134,28 @@ function render (arr) {
         return "I have not read this."
       }
     }
+
+//button to change read status
+let readStatus = document.createElement('button');
+    let readButtonName = document.createTextNode('Change Status');
+    readStatus.appendChild(readButtonName);
+    readStatus.id = element.id
+    readStatus.onclick = function () {
+      if (element.read) {
+        element.read -= 1
+      } else {
+        element.read += 1
+      }
+        
+      
+      while(bookCards.lastChild) {
+           bookCards.removeChild(bookCards.lastChild)
+        }
+
+        render(myLibrary)
+    }
+
+
 //button to remove book
     let removeBook = document.createElement('button')
     let buttonName = document.createTextNode('Remove Book');
@@ -147,7 +169,14 @@ function render (arr) {
       while(bookCards.lastChild) {
            bookCards.removeChild(bookCards.lastChild)
         }
+
+
+
+
       render(myLibrary)
+
+
+    
       
       }
    
@@ -160,7 +189,9 @@ function render (arr) {
     newBook.appendChild(author)
     newBook.appendChild(pages)
     newBook.appendChild(read)
+    newBook.appendChild(readStatus)
     newBook.appendChild(removeBook)
+    
     
     bookNumber++
   })
